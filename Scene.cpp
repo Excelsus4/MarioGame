@@ -2,9 +2,11 @@
 #include "./Systems/Device.h"
 #include "./Objects/Background.h"
 #include "./Objects/Mario.h"
+#include "./Objects/Bricks.h"
 
 Background* bg;
 Mario* animation;
+vector<Bricks*> bricks;
 
 void InitScene() {
 	bg = new Background(Shaders+L"008_Sprite.fx");
@@ -13,6 +15,9 @@ void InitScene() {
 
 	animation->Position(100, 170);
 	animation->Play(0);
+
+	for(int i = 0; i < 4; i++)
+		bricks.push_back(new Bricks(D3DXVECTOR2(250+i*16, 250)));
 }
 
 void DestroyScene(){
@@ -48,6 +53,8 @@ void Update() {
 
 	bg->Update(V, P);
 	animation->Update(V, P);
+	for (auto a : bricks)
+		a->Update(V, P);
 }
 
 void Render() {
@@ -55,6 +62,8 @@ void Render() {
 	DeviceContext->ClearRenderTargetView(RTV, (float*)bgColor);
 	{
 		bg->Render();
+		for (auto a : bricks)
+			a->Render();
 		animation->Render();
 	}
 	ImGui::Render();
