@@ -16,8 +16,8 @@ void InitScene() {
 	animation->Position(100, 170);
 	animation->Play(0);
 
-	for(int i = 0; i < 4; i++)
-		bricks.push_back(new Bricks(D3DXVECTOR2(250+i*16, 250)));
+	for(int i = 0; i < 20; i++)
+		bricks.push_back(new Bricks(D3DXVECTOR2(250+i*16, 220)));
 }
 
 void DestroyScene(){
@@ -52,7 +52,7 @@ void Update() {
 	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width, 0, (float)Height, -1, 1);
 
 	bg->Update(V, P);
-	animation->Update(V, P);
+	animation->Update(V, P, &bricks);
 	for (auto a : bricks)
 		a->Update(V, P);
 }

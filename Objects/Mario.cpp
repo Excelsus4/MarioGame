@@ -79,19 +79,41 @@ Mario::~Mario()
 {
 }
 
-void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P)
+void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV)
 {
 	__super::Update(V, P);
 	D3DXVECTOR2 position = Position();
 	velocity += gravity * Timer->Elapsed();
 
+	// Gravity 
 	if (bOnGround == false) {
 		if(marioState != State::Jump)
 			UpdateMarioState(State::Fall);
 		position.y += velocity;
 		Position(position);
 	}
-	if (position.y < TextureSize().y*0.5f+105) {
+	else if(position.y > TextureSize().y*0.5f + 105){
+		// Check if ground is still there
+		float CP = position.x;
+		float CD = TextureSize().x / 2 - 15;
+
+		bool isGroundExist = false;
+		for (auto a : *brV) {
+			float BP = a->Position().x;
+			float BD = a->TextureSize().x / 2;
+			if (CP + CD > BP - BD && CP - CD < BP + BD) {
+				isGroundExist = true;
+				break;
+			}
+		}
+		if (!isGroundExist) {
+			UpdateMarioState(State::Fall);
+			bOnGround = false;
+		}
+	}
+
+	// The Bedrock floor
+	if (position.y <= TextureSize().y*0.5f+105) {
 		if(marioState != State::Walk)
 			UpdateMarioState(State::Idle);
 		position.y = TextureSize().y*0.5f+105;
@@ -101,13 +123,72 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 
 		Position(position);
 	}
+	else if(velocity<0) {
+		//Check with each bricks and find if its floor
+		float CP = position.x;
+		float CD = TextureSize().x / 2 - 15;
+
+		float CPV = position.y;
+		float CDV = TextureSize().y / 2 -2;
+
+		for (auto a : *brV) {
+			float BP = a->Position().x;
+			float BD = a->TextureSize().x / 2;
+			if (CP + CD > BP - BD && CP - CD < BP + BD) {
+				float BPV = a->Position().y;
+				float BDV = a->TextureSize().y / 2;
+
+				if (CPV - CDV <= BPV + BDV && CPV+CDV>BPV-BDV) {
+					if (marioState != State::Walk)
+						UpdateMarioState(State::Idle);
+					position.y = BPV + BDV + CDV;
+					velocity = 0.0f;
+					bOnGround = true;
+					Position(position);
+					break;
+				}
+			}
+		}
+	}
+	else if (velocity > 0) {
+		//Check with each bricks and find if its ceiling
+		float CP = position.x;
+		float CD = TextureSize().x / 2 - 15;
+
+		float CPV = position.y;
+		float CDV = TextureSize().y / 2 - 2;
+		for (auto a : *brV) {
+			float BP = a->Position().x;
+			float BD = a->TextureSize().x / 2;
+			if (CP + CD > BP - BD && CP - CD < BP + BD) {
+				float BPV = a->Position().y;
+				float BDV = a->TextureSize().y / 2;
+				if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+					position.y = BPV - BDV - CDV;
+					velocity = 0.0f;
+					Position(position);
+					break;
+				}
+			}
+		}
+	}
+
+	// It is the walking Animation
 	if (bOnGround && isMoving != 0) {
 
 		UpdateMarioState(State::Walk);
 	}
+
+	// It is the sideward moving action
 	if (isMoving != 0) {
 		D3DXVECTOR2 position = Position();
 		position.x += speed * Timer->Elapsed() * isMoving;
+
+		//TODO: Check with each bricks and find if its wall
+		for (auto a : *brV) {
+			
+		}
+
 		Position(position);
 	}
 }

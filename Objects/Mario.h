@@ -1,4 +1,5 @@
 #pragma once
+#include "Objects/Bricks.h"
 
 enum class State {
 	Idle = 0, Walk, Jump, Fall
@@ -9,7 +10,7 @@ public:
 	Mario();
 	virtual ~Mario();
 
-	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P);
+	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV);
 
 	void StartMoving(int Direction);
 	void StopMoving();
