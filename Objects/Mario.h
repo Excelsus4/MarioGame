@@ -10,7 +10,7 @@ public:
 	Mario();
 	virtual ~Mario();
 
-	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV);
+	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV, vector<Bricks*>* fbrV);
 
 	void StartMoving(int Direction);
 	void StopMoving();
@@ -20,6 +20,7 @@ public:
 	
 private:
 	Sprite* CreateMarioSprite(const int& xIndex, const int& yIndex);
+	Sprite* CreateSuperMarioSprite(const int& xIndex, const int& yIndex);
 	void UpdateMarioState(bool headLeft);
 	void UpdateMarioState(State newState);
 

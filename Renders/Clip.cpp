@@ -54,6 +54,30 @@ void Clip::Scale(D3DXVECTOR2 vec)
 	}
 }
 
+void Clip::Rotation(float x, float y, float z)
+{
+	Rotation(D3DXVECTOR3(x, y, z));
+}
+
+void Clip::Rotation(D3DXVECTOR3 vec)
+{
+	for (auto frame : frames) {
+		frame->Image->Rotation(vec);
+	}
+}
+
+void Clip::RotationDegree(float x, float y, float z)
+{
+	RotationDegree(D3DXVECTOR3(x, y, z));
+}
+
+void Clip::RotationDegree(D3DXVECTOR3 vec)
+{
+	for (auto frame : frames) {
+		frame->Image->RotationDegree(vec);
+	}
+}
+
 D3DXVECTOR2 Clip::TextureSize() const
 {
 	return frames[currentFrame]->Image->TextureSize();

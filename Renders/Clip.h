@@ -23,6 +23,12 @@ public:
 	void Scale(float x, float y);
 	void Scale(D3DXVECTOR2 vec);
 
+	void Rotation(float x, float y, float z);
+	void Rotation(D3DXVECTOR3 vec);
+
+	void RotationDegree(float x, float y, float z);
+	void RotationDegree(D3DXVECTOR3 vec);
+
 	D3DXVECTOR2 TextureSize() const;
 
 	void AddFrame(Sprite* sprite, float time);

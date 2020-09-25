@@ -2,7 +2,7 @@
 
 class Bricks {
 public:
-	Bricks(D3DXVECTOR2 pos);
+	Bricks(D3DXVECTOR2 pos, D3DXVECTOR2 index);
 	virtual ~Bricks();
 
 	void Update(D3DXMATRIX& V, D3DXMATRIX& P);

@@ -19,6 +19,14 @@ public:
 	void Scale(D3DXVECTOR2& vec);
 	D3DXVECTOR2 Scale() const { return scale; }
 
+	void Rotation(float x, float y, float z);
+	void Rotation(D3DXVECTOR3& vec);
+	D3DXVECTOR3 Rotation() const { return rotation; }
+
+	void RotationDegree(float x, float y, float z);
+	void RotationDegree(D3DXVECTOR3& vec);
+	D3DXVECTOR3 RotationDegree() const;
+
 	D3DXVECTOR2 TextureSize() const { return textureSize; }
 
 private:
@@ -33,6 +41,8 @@ private:
 
 	D3DXVECTOR2 position;
 	D3DXVECTOR2 scale;
+	D3DXVECTOR3 rotation;
+
 	D3DXVECTOR2 textureSize;
 
 	ID3D11ShaderResourceView* srv;

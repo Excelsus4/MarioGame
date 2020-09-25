@@ -62,6 +62,43 @@ void Animation::Scale(D3DXVECTOR2 vec)
 	scale = vec;
 }
 
+void Animation::Rotation(float x, float y, float z)
+{
+	Rotation(D3DXVECTOR3(x, y, z));
+}
+
+void Animation::Rotation(D3DXVECTOR3 vec)
+{
+	for (auto clip : clips)
+		clip->Rotation(vec);
+
+	rotation = vec;
+}
+
+void Animation::RotationDegree(float x, float y, float z)
+{
+	RotationDegree(D3DXVECTOR3(x, y, z));
+}
+
+void Animation::RotationDegree(D3DXVECTOR3 vec)
+{
+	vec.x = Math::ToRadian(vec.x);
+	vec.y = Math::ToRadian(vec.y);
+	vec.z = Math::ToRadian(vec.z);
+
+	Rotation(vec);
+}
+
+D3DXVECTOR3 Animation::RotationDegree() const
+{
+	D3DXVECTOR3 vec;
+	vec.x = Math::ToRadian(rotation.x);
+	vec.y = Math::ToRadian(rotation.y);
+	vec.z = Math::ToRadian(rotation.z);
+
+	return vec;
+}
+
 D3DXVECTOR2 Animation::TextureSize()
 {
 	if (currentClip < 0)

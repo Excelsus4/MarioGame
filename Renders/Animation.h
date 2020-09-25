@@ -17,6 +17,14 @@ public:
 	void Scale(D3DXVECTOR2 vec);
 	D3DXVECTOR2 Scale() { return scale; }
 
+	void Rotation(float x, float y, float z);
+	void Rotation(D3DXVECTOR3 vec);
+	D3DXVECTOR3 Rotation() const { return rotation; }
+
+	void RotationDegree(float x, float y, float z);
+	void RotationDegree(D3DXVECTOR3 vec);
+	D3DXVECTOR3 RotationDegree() const;
+
 	D3DXVECTOR2 TextureSize();
 
 	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P);
@@ -25,6 +33,7 @@ public:
 private:
 	D3DXVECTOR2 position;
 	D3DXVECTOR2 scale;
+	D3DXVECTOR3 rotation;
 
 	UINT currentClip;
 	vector<Clip*> clips;

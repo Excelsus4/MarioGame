@@ -27,12 +27,6 @@
     <ClCompile Include="Systems\Device.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Background.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Bullet.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Renders\Clip.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
@@ -49,6 +43,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Bricks.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Map.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,12 +75,6 @@
     <ClInclude Include="Systems\Device.h">
       <Filter>Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Background.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Bullet.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Renders\Clip.h">
       <Filter>Renders</Filter>
     </ClInclude>
@@ -100,6 +91,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Bricks.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Map.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

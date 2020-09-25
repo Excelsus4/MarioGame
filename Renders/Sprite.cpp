@@ -8,19 +8,16 @@
 Sprite::Sprite(wstring textureFile, wstring shaderFile)
 {
 	Initialize(textureFile, shaderFile, 0, 0, 0, 0);
-	textureSize = D3DXVECTOR2(0, 0);
 }
 
 Sprite::Sprite(wstring textureFile, wstring shaderFile, float endX, float endY)
 {
 	Initialize(textureFile, shaderFile, 0, 0, endX, endY);
-	textureSize = D3DXVECTOR2(endX, endY);
 }
 
 Sprite::Sprite(wstring textureFile, wstring shaderFile, float startX, float startY, float endX, float endY)
 {
 	Initialize(textureFile, shaderFile, startX, startY, endX, endY);
-	textureSize = D3DXVECTOR2(endX - startX, endY - startY);
 }
 
 Sprite::~Sprite()
@@ -70,12 +67,51 @@ void Sprite::Scale(D3DXVECTOR2 & vec)
 	UpdateWorld();
 }
 
+void Sprite::Rotation(float x, float y, float z)
+{
+	Rotation(D3DXVECTOR3(x, y, z));
+}
+
+void Sprite::Rotation(D3DXVECTOR3 & vec)
+{
+	rotation = vec;
+	UpdateWorld();
+}
+
+void Sprite::RotationDegree(float x, float y, float z)
+{
+	RotationDegree(D3DXVECTOR3(x, y, z));
+}
+
+void Sprite::RotationDegree(D3DXVECTOR3 & vec)
+{
+	vec.x = Math::ToRadian(vec.x);
+	vec.y = Math::ToRadian(vec.y);
+	vec.z = Math::ToRadian(vec.z);
+
+	Rotation(vec);
+}
+
+D3DXVECTOR3 Sprite::RotationDegree() const
+{
+	D3DXVECTOR3 vec;
+	vec.x = Math::ToDegree(rotation.x);
+	vec.y = Math::ToDegree(rotation.y);
+	vec.z = Math::ToDegree(rotation.z);
+
+	return vec;
+}
+
 void Sprite::Initialize(wstring spriteFile, wstring shaderFile, float startX, float startY, float endX, float endY)
 {
 	textureFile = spriteFile;
 	shader = new Shader(shaderFile);
 	srv = Sprites::Load(spriteFile);
 	shader->AsShaderResource("Map")->SetResource(srv);
+
+	Position(0, 0);
+	Scale(1, 1);
+	Rotation(0, 0, 0);
 
 	HRESULT hr;
 	D3DX11_IMAGE_INFO info;
@@ -103,15 +139,13 @@ void Sprite::Initialize(wstring spriteFile, wstring shaderFile, float startX, fl
 	vertices[4].Uv = D3DXVECTOR2(startX, startY);
 	vertices[5].Uv = D3DXVECTOR2(endX, startY);
 
-	float sizeX = (endX > 0) ? endX : 1.0f;
-	sizeX -= startX;
-	sizeX *= (float)info.Width;
+	float sizeX = (endX > 0) ? endX * (float)info.Width : (float)info.Width;
+	sizeX -= startX * (float)info.Width;
 
-	float sizeY = (endY > 0) ? endY : 1.0f;
-	sizeY -= startY;
-	sizeY *= (float)info.Height;
+	float sizeY = (endY > 0) ? endY * (float)info.Height : (float)info.Height;
+	sizeY -= startY * (float)info.Height;
 
-	scale = D3DXVECTOR2(sizeX, sizeY);
+	textureSize = D3DXVECTOR2(sizeX, sizeY);
 	UpdateWorld();
 
 	{
@@ -131,10 +165,11 @@ void Sprite::Initialize(wstring spriteFile, wstring shaderFile, float startX, fl
 
 void Sprite::UpdateWorld()
 {
-	D3DXMATRIX W, S, T;
-	D3DXMatrixScaling(&S, scale.x, scale.y, 1.0f);
-	D3DXMatrixTranslation(&T, position.x, position.y, 0.0f);
-	W = S * T;
+	D3DXMATRIX W, S, R, T;
+	D3DXMatrixScaling(&S, scale.x * textureSize.x, scale.y * textureSize.y, 1.0f);
+	D3DXMatrixRotationY(&R, rotation.y);
+	D3DXMatrixTranslation(&T, position.x + scale.x * 0.5f, position.y + scale.y*0.5f, 0.0f);
+	W = S * R * T;
 
 	shader->AsMatrix("World")->SetMatrix(W);
 }

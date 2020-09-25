@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Bricks.h"
 
-Bricks::Bricks(D3DXVECTOR2 pos)
+Bricks::Bricks(D3DXVECTOR2 pos, D3DXVECTOR2 index)
 {
-	sprite = new Sprite(Textures + L"Mario/Brick.png", Shaders + L"008_Sprite.fx", 272, 112, 288, 128);
+	sprite = new Sprite(Textures + L"Mario/custom.png", Shaders + L"008_Sprite.fx", index.x * 16, index.y * 16, (index.x + 1) * 16, (index.y + 1) * 16);
 	position = pos;
 	sprite->Position(pos);
 }
