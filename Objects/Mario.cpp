@@ -163,7 +163,7 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV)
 			if (CP + CD > BP - BD && CP - CD < BP + BD) {
 				float BPV = a->Position().y;
 				float BDV = a->TextureSize().y / 2;
-				if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+				if (CPV + CDV >= BPV - BDV && CPV - CDV <= BPV + BDV) {
 					position.y = BPV - BDV - CDV;
 					velocity = 0.0f;
 					Position(position);
@@ -184,9 +184,30 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV)
 		D3DXVECTOR2 position = Position();
 		position.x += speed * Timer->Elapsed() * isMoving;
 
-		//TODO: Check with each bricks and find if its wall
+		//Check with each bricks and find if its wall
+		float CPV = position.y;
+		float CDV = TextureSize().y / 2 - 2;
+
+		float CP = position.x;
+		float CD = TextureSize().x / 2 - 14;
+		
 		for (auto a : *brV) {
-			
+			float BPV = a->Position().y;
+			float BDV = a->TextureSize().y / 2;
+
+			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+				float BP = a->Position().x;
+				float BD = a->TextureSize().x / 2;
+
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					if (CP > BP) {
+						position.x = BP + BD + CD;
+					}
+					else {
+						position.x = BP - BD - CD;
+					}
+				}
+			}
 		}
 
 		Position(position);
