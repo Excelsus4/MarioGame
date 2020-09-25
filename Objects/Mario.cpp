@@ -2,7 +2,7 @@
 #include "Mario.h"
 
 Mario::Mario():
-speed(250.0f), velocity(0.0f), gravity(-600), 
+speed(250.0f), velocity(0.0f), gravity(-600), focusOffset(-20, -60),
 bOnGround(false), bHeadingLeft(false), jumpStrength(320.0f)
 {
 	Clip* clip;
@@ -58,30 +58,41 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 		position.y += velocity * Timer->Elapsed();
 		Position(position);
 	}
-	else if(position.y > TextureSize().y*0.5f + 105){
+	else{
 		// Check if ground is still there
 		float CP = position.x;
 		float CD = TextureSize().x / 2;
+
+		float CPV = position.y;
+		float CDV = TextureSize().y / 2;
 
 		bool isGroundExist = false;
 		for (auto a : *brV) {
 			float BP = a->Position().x;
 			float BD = a->TextureSize().x / 2;
 			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				isGroundExist = true;
+				float BPV = a->Position().y;
+				float BDV = a->TextureSize().y / 2;
+				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
+					isGroundExist = true;
 				break;
 			}
 		}
+
 		if (!isGroundExist) {
 			for (auto fb : *fbrV) {
 				float BP = fb->Position().x;
 				float BD = fb->TextureSize().x / 2;
 				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					isGroundExist = true;
+					float BPV = fb->Position().y;
+					float BDV = fb->TextureSize().y / 2;
+					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
+						isGroundExist = true;
 					break;
 				}
 			}
 		}
+
 		if (!isGroundExist) {
 			UpdateMarioState(State::Fall);
 			bOnGround = false;
@@ -245,6 +256,18 @@ void Mario::EndJump()
 	}
 	if (velocity > jumpStrength / 3)
 		velocity = jumpStrength / 3;
+}
+
+void Mario::Focus(D3DXVECTOR2 * position, D3DXVECTOR2 * size)
+{
+	*position = Position() - focusOffset;
+
+	D3DXVECTOR2 textureSize = TextureSize();
+	D3DXVECTOR2 scale = Scale();
+
+	(*position).y = 0;
+	(*size).x = textureSize.x*scale.x;
+	(*size).y = 0;
 }
 
 Sprite * Mario::CreateMarioSprite(const int & xIndex, const int & yIndex)

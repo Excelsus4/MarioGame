@@ -3,6 +3,9 @@
 #include "./Objects/Mario.h"
 #include "./Objects/Bricks.h"
 #include "./Objects/Map.h"
+#include "./Viewer/Following.h"
+
+Camera* camera;
 
 Mario* animation;
 vector<Bricks*> bricks;
@@ -15,7 +18,10 @@ void InitScene() {
 	animation->Position(100, 170);
 	animation->Play(0);
 
-	Map::MapGen(&bricks, &floorOnlyBricks, &nonPhysicBricks);
+	camera = new Following(animation);
+
+	Map map(&bricks, &floorOnlyBricks, &nonPhysicBricks);
+	map.GenerateMap();
 }
 
 void DestroyScene(){
@@ -44,15 +50,15 @@ void Update() {
 	else if (Key->Up(VK_SPACE))
 		animation->EndJump();
 
-	//View
-	D3DXVECTOR3 eye(0, 0, -1);
-	D3DXVECTOR3 at(0, 0, 0);
-	D3DXVECTOR3 up(0, 1, 0);
-	D3DXMatrixLookAtLH(&V, &eye, &at, &up);
-
 	//Projection
-	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width/2, 0, (float)Height/2, -1, 1);
+	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width / WindowScale.x, 0, (float)Height / WindowScale.y, -1, 1);
 
+	//View
+	camera->Update();
+
+	D3DXMATRIX V = camera->View();
+
+	//Update
 	animation->Update(V, P, &bricks, &floorOnlyBricks);
 	for (auto a : bricks)
 		a->Update(V, P);
@@ -63,15 +69,15 @@ void Update() {
 }
 
 void Render() {
-	D3DXCOLOR bgColor = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1);
+	D3DXCOLOR bgColor = D3DXCOLOR(0.36f, 0.58f, 0.99f, 1);
 	DeviceContext->ClearRenderTargetView(RTV, (float*)bgColor);
 	{
-		for (auto a : bricks)
-			a->Render();
-		for (auto fb : floorOnlyBricks)
-			fb->Render();
 		for (auto nb : nonPhysicBricks)
 			nb->Render();
+		for (auto fb : floorOnlyBricks)
+			fb->Render();
+		for (auto a : bricks)
+			a->Render();
 		animation->Render();
 	}
 	ImGui::Render();

@@ -1,11 +1,12 @@
 #pragma once
 #include "Objects/Bricks.h"
+#include "Viewer/IFollowing.h"
 
 enum class State {
 	Idle = 0, Walk, Jump, Fall
 };
 
-class Mario :public Animation {
+class Mario :public Animation, public IFollowing {
 public:
 	Mario();
 	virtual ~Mario();
@@ -17,6 +18,8 @@ public:
 
 	void StartJump();
 	void EndJump();
+
+	virtual void Focus(D3DXVECTOR2* position, D3DXVECTOR2* size) override;
 	
 private:
 	Sprite* CreateMarioSprite(const int& xIndex, const int& yIndex);
@@ -35,4 +38,6 @@ private:
 	float velocity;
 	bool bOnGround;
 	int isMoving;
+
+	D3DXVECTOR2 focusOffset;
 };

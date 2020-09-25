@@ -2,6 +2,7 @@
 
 class Bricks {
 public:
+	Bricks(float posx, float posy, float indexx, float indexy);
 	Bricks(D3DXVECTOR2 pos, D3DXVECTOR2 index);
 	virtual ~Bricks();
 

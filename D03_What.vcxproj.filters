@@ -48,6 +48,15 @@
     <ClCompile Include="Objects\Map.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Viewer\Camera.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer\Following.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer\Freedom.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -96,6 +105,18 @@
     <ClInclude Include="Objects\Map.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Viewer\Camera.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\Following.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\Freedom.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\IFollowing.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -109,6 +130,9 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{7474e0b7-ae15-41b7-8f0c-c1dade6a655d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Viewer">
+      <UniqueIdentifier>{30eb959a-0d6a-432b-a824-61d63d8ec61b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
