@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Map.h"
 
-Map::Map(vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<Bricks*>* nbrV):
-	brV(brV), fbrV(fbrV), nbrV(nbrV)
+Map::Map(vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<Bricks*>* nbrV, vector<IBreakable*>* pbrV):
+	brV(brV), fbrV(fbrV), nbrV(nbrV), pbrV(pbrV)
 {
 }
 
@@ -227,18 +227,18 @@ void Map::GenerateHedge(D3DXVECTOR2 p, int h)
 
 void Map::GenerateBrick(D3DXVECTOR2 p)
 {
-	brV->push_back(new Bricks(p.x, p.y, 1, 0));
+	pbrV->push_back(new DBricks(p.x, p.y, 1, 0));
 }
 
 void Map::GenerateBrick(D3DXVECTOR2 p, int l)
 {
 	for (int i = 0; i < l; i++)
-		brV->push_back(new Bricks(p.x + i, p.y, 1, 0));
+		pbrV->push_back(new DBricks(p.x + i, p.y, 1, 0));
 }
 
 void Map::GenerateBox(D3DXVECTOR2 p)
 {
-	brV->push_back(new Bricks(p.x, p.y, 23, 0));
+	pbrV->push_back(new ItemBox(p.x, p.y, 26, 0));
 }
 
 void Map::GenerateStair(D3DXVECTOR2 p, D3DXVECTOR2 stride, int l)

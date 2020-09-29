@@ -1,5 +1,6 @@
 #pragma once
 #include "Objects/Bricks.h"
+#include "Objects/IBreakable.h"
 #include "Viewer/IFollowing.h"
 
 enum class State {
@@ -11,7 +12,7 @@ public:
 	Mario();
 	virtual ~Mario();
 
-	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV, vector<Bricks*>* fbrV);
+	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<IBreakable*>* pbrV);
 
 	void StartMoving(int Direction);
 	void StopMoving();
@@ -28,6 +29,7 @@ private:
 	void UpdateMarioState(State newState);
 
 private:
+	int marioLevel;
 	State marioState;
 	bool bHeadingLeft;
 

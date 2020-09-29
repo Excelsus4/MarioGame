@@ -1,9 +1,11 @@
 #pragma once
 #include "Bricks.h"
+#include "DBricks.h"
+#include "ItemBox.h"
 
 class Map {
 public:
-	Map(vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<Bricks*>* nbrV);
+	Map(vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<Bricks*>* nbrV, vector<IBreakable*>* pbrV);
 	virtual ~Map();
 
 	void GenerateMap();
@@ -29,4 +31,5 @@ private:
 	vector<Bricks*>* brV;
 	vector<Bricks*>* fbrV; 
 	vector<Bricks*>* nbrV;
+	vector<IBreakable*>* pbrV;
 };

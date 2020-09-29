@@ -57,6 +57,12 @@
     <ClCompile Include="Viewer\Freedom.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\DBricks.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\ItemBox.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -116,6 +122,15 @@
     </ClInclude>
     <ClInclude Include="Viewer\IFollowing.h">
       <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\IBreakable.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\DBricks.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\ItemBox.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -145,6 +145,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Objects\Bricks.cpp" />
+    <ClCompile Include="Objects\DBricks.cpp" />
+    <ClCompile Include="Objects\ItemBox.cpp" />
     <ClCompile Include="Objects\Map.cpp" />
     <ClCompile Include="Objects\Mario.cpp" />
     <ClCompile Include="Renders\Animation.cpp" />
@@ -170,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Objects\Bricks.h" />
+    <ClInclude Include="Objects\DBricks.h" />
+    <ClInclude Include="Objects\IBreakable.h" />
+    <ClInclude Include="Objects\ItemBox.h" />
     <ClInclude Include="Objects\Map.h" />
     <ClInclude Include="Objects\Mario.h" />
     <ClInclude Include="Renders\Animation.h" />

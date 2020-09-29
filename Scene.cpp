@@ -11,6 +11,7 @@ Mario* animation;
 vector<Bricks*> bricks;
 vector<Bricks*> floorOnlyBricks;
 vector<Bricks*> nonPhysicBricks;
+vector<IBreakable*> platformBricks;
 
 void InitScene() {
 	animation = new Mario();
@@ -20,7 +21,7 @@ void InitScene() {
 
 	camera = new Following(animation);
 
-	Map map(&bricks, &floorOnlyBricks, &nonPhysicBricks);
+	Map map(&bricks, &floorOnlyBricks, &nonPhysicBricks, &platformBricks);
 	map.GenerateMap();
 }
 
@@ -59,13 +60,15 @@ void Update() {
 	D3DXMATRIX V = camera->View();
 
 	//Update
-	animation->Update(V, P, &bricks, &floorOnlyBricks);
+	animation->Update(V, P, &bricks, &floorOnlyBricks, &platformBricks);
 	for (auto a : bricks)
 		a->Update(V, P);
 	for (auto fb : floorOnlyBricks)
 		fb->Update(V, P);
 	for (auto nb : nonPhysicBricks)
 		nb->Update(V, P);
+	for (auto p : platformBricks)
+		p->Update(V, P);
 }
 
 void Render() {
@@ -78,6 +81,8 @@ void Render() {
 			fb->Render();
 		for (auto a : bricks)
 			a->Render();
+		for (auto p : platformBricks)
+			p->Render();
 		animation->Render();
 	}
 	ImGui::Render();

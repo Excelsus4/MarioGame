@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Mario.h"
 
-Mario::Mario():
-speed(250.0f), velocity(0.0f), gravity(-600), focusOffset(-20, -60),
-bOnGround(false), bHeadingLeft(false), jumpStrength(320.0f)
+Mario::Mario() :
+	speed(250.0f), velocity(0.0f), gravity(-600), focusOffset(-20, -60),
+	bOnGround(false), bHeadingLeft(false), jumpStrength(320.0f),
+	marioLevel(1)
 {
 	Clip* clip;
 	// Idle
@@ -45,7 +46,7 @@ Mario::~Mario()
 {
 }
 
-void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<Bricks*>* fbrV)
+void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<IBreakable*>* pbrV)
 {
 	__super::Update(V, P);
 	D3DXVECTOR2 position = Position();
@@ -86,6 +87,20 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 				if (CP + CD > BP - BD && CP - CD < BP + BD) {
 					float BPV = fb->Position().y;
 					float BDV = fb->TextureSize().y / 2;
+					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
+						isGroundExist = true;
+					break;
+				}
+			}
+		}
+
+		if (!isGroundExist) {
+			for (auto p : *pbrV) {
+				float BP = p->Position().x;
+				float BD = p->TextureSize().x / 2;
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					float BPV = p->Position().y;
+					float BDV = p->TextureSize().y / 2;
 					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
 						isGroundExist = true;
 					break;
@@ -156,6 +171,26 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 				}
 			}
 		}
+		if (!bOnGround) {
+			for (auto p : *pbrV) {
+				float BP = p->Position().x;
+				float BD = p->TextureSize().x / 2;
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					float BPV = p->Position().y;
+					float BDV = p->TextureSize().y / 2;
+
+					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+						if (marioState != State::Walk)
+							UpdateMarioState(State::Idle);
+						position.y = BPV + BDV + CDV;
+						velocity = 0.0f;
+						bOnGround = true;
+						Position(position);
+						break;
+					}
+				}
+			}
+		}
 	}
 	else if (velocity > 0) {
 		//Check with each bricks and find if its ceiling
@@ -164,7 +199,7 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 
 		float CPV = position.y;
 		float CDV = TextureSize().y / 2;
-		for (auto a : *brV) {
+		for (auto a : *pbrV) {
 			float BP = a->Position().x;
 			float BD = a->TextureSize().x / 2;
 			if (CP + CD > BP - BD && CP - CD < BP + BD) {
@@ -173,6 +208,7 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 				if (CPV + CDV >= BPV - BDV && CPV - CDV <= BPV + BDV) {
 					position.y = BPV - BDV - CDV;
 					velocity = 0.0f;
+					a->Bump(marioLevel);
 					Position(position);
 					break;
 				}
@@ -205,6 +241,25 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, vector<Bricks*>* brV, vector<
 			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
 				float BP = a->Position().x;
 				float BD = a->TextureSize().x / 2;
+
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					if (CP > BP) {
+						position.x = BP + BD + CD;
+					}
+					else {
+						position.x = BP - BD - CD;
+					}
+				}
+			}
+		}
+
+		for (auto p : *pbrV) {
+			float BPV = p->Position().y;
+			float BDV = p->TextureSize().y / 2;
+
+			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+				float BP = p->Position().x;
+				float BD = p->TextureSize().x / 2;
 
 				if (CP + CD > BP - BD && CP - CD < BP + BD) {
 					if (CP > BP) {
