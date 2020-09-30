@@ -144,11 +144,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Entity\Goomba.cpp" />
+    <ClCompile Include="Entity\IGravity.cpp" />
+    <ClCompile Include="Entity\Item.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Entity\Mario.cpp" />
+    <ClCompile Include="Entity\ShiftingItem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Objects\Bricks.cpp" />
     <ClCompile Include="Objects\DBricks.cpp" />
     <ClCompile Include="Objects\ItemBox.cpp" />
     <ClCompile Include="Objects\Map.cpp" />
-    <ClCompile Include="Objects\Mario.cpp" />
     <ClCompile Include="Renders\Animation.cpp" />
     <ClCompile Include="Renders\Clip.cpp" />
     <ClCompile Include="Renders\Rect.cpp" />
@@ -171,12 +179,21 @@
     <None Include="Utilities\Xml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity\Goomba.h" />
+    <ClInclude Include="Entity\IGravity.h" />
+    <ClInclude Include="Entity\Interact.h" />
+    <ClInclude Include="Entity\Item.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Entity\Mario.h" />
+    <ClInclude Include="Entity\ShiftingItem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Objects\Bricks.h" />
     <ClInclude Include="Objects\DBricks.h" />
     <ClInclude Include="Objects\IBreakable.h" />
     <ClInclude Include="Objects\ItemBox.h" />
     <ClInclude Include="Objects\Map.h" />
-    <ClInclude Include="Objects\Mario.h" />
     <ClInclude Include="Renders\Animation.h" />
     <ClInclude Include="Renders\Clip.h" />
     <ClInclude Include="Renders\Rect.h" />

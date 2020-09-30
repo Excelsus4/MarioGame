@@ -1,18 +1,16 @@
 #pragma once
+#include "IGravity.h"
 #include "Objects/Bricks.h"
 #include "Objects/IBreakable.h"
 #include "Viewer/IFollowing.h"
 
-enum class State {
-	Idle = 0, Walk, Jump, Fall
-};
 
-class Mario :public Animation, public IFollowing {
+class Mario : public IGravity, public Animation, public IFollowing {
 public:
 	Mario();
 	virtual ~Mario();
 
-	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, vector<Bricks*>* brV, vector<Bricks*>* fbrV, vector<IBreakable*>* pbrV);
+	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, World* world);
 
 	void StartMoving(int Direction);
 	void StopMoving();
@@ -21,6 +19,15 @@ public:
 	void EndJump();
 
 	virtual void Focus(D3DXVECTOR2* position, D3DXVECTOR2* size) override;
+
+	virtual void Position(float x, float y);
+	virtual void Position(D3DXVECTOR2 vec);
+	virtual D3DXVECTOR2 Position() const;
+
+	virtual D3DXVECTOR2 Size() const;
+
+protected:
+	virtual void SetAnimState(State state) override;
 	
 private:
 	Sprite* CreateMarioSprite(const int& xIndex, const int& yIndex);
@@ -33,13 +40,7 @@ private:
 	State marioState;
 	bool bHeadingLeft;
 
-	float speed;
-	float gravity;
 	float jumpStrength;
-
-	float velocity;
-	bool bOnGround;
-	int isMoving;
 
 	D3DXVECTOR2 focusOffset;
 };

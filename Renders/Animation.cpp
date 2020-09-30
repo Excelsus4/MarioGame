@@ -99,7 +99,7 @@ D3DXVECTOR3 Animation::RotationDegree() const
 	return vec;
 }
 
-D3DXVECTOR2 Animation::TextureSize()
+D3DXVECTOR2 Animation::TextureSize() const
 {
 	if (currentClip < 0)
 		return D3DXVECTOR2(0, 0);

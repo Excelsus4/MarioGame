@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "./Systems/Device.h"
-#include "./Objects/Mario.h"
+#include "./Entity/Mario.h"
 #include "./Objects/Bricks.h"
 #include "./Objects/Map.h"
 #include "./Viewer/Following.h"
+#include "./Entity/Interact.h"
+#include "./Entity/Goomba.h"
 
 Camera* camera;
 
@@ -12,6 +14,9 @@ vector<Bricks*> bricks;
 vector<Bricks*> floorOnlyBricks;
 vector<Bricks*> nonPhysicBricks;
 vector<IBreakable*> platformBricks;
+vector<Interact*> Entities;
+
+World world;
 
 void InitScene() {
 	animation = new Mario();
@@ -23,6 +28,13 @@ void InitScene() {
 
 	Map map(&bricks, &floorOnlyBricks, &nonPhysicBricks, &platformBricks);
 	map.GenerateMap();
+
+	world.bricks = &bricks;
+	world.floorOnlyBricks = &floorOnlyBricks;
+	world.nonPhysicBricks = &nonPhysicBricks;
+	world.platformBricks = &platformBricks;
+
+	Entities.push_back(new Goomba(D3DXVECTOR2(250, 170)));
 }
 
 void DestroyScene(){
@@ -33,6 +45,8 @@ void DestroyScene(){
 		SAFE_DELETE(fb);
 	for (auto nb : nonPhysicBricks)
 		SAFE_DELETE(nb);
+	for(auto ee:Entities)
+		SAFE_DELETE(ee)
 }
 
 D3DXMATRIX V, P;
@@ -60,7 +74,7 @@ void Update() {
 	D3DXMATRIX V = camera->View();
 
 	//Update
-	animation->Update(V, P, &bricks, &floorOnlyBricks, &platformBricks);
+	animation->Update(V, P, &world);
 	for (auto a : bricks)
 		a->Update(V, P);
 	for (auto fb : floorOnlyBricks)
@@ -69,6 +83,8 @@ void Update() {
 		nb->Update(V, P);
 	for (auto p : platformBricks)
 		p->Update(V, P);
+	for (auto ee : Entities)
+		ee->Update(V, P, &world);
 }
 
 void Render() {
@@ -83,6 +99,9 @@ void Render() {
 			a->Render();
 		for (auto p : platformBricks)
 			p->Render();
+		for (auto ee : Entities)
+			ee->Render();
+
 		animation->Render();
 	}
 	ImGui::Render();

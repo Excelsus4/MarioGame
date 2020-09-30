@@ -39,9 +39,6 @@
     <ClCompile Include="Renders\Animation.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Mario.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Bricks.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -62,6 +59,21 @@
     </ClCompile>
     <ClCompile Include="Objects\ItemBox.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Item.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\ShiftingItem.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Goomba.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\Mario.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\IGravity.cpp">
+      <Filter>Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +114,6 @@
     <ClInclude Include="Renders\Animation.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Mario.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\Bricks.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -132,6 +141,24 @@
     <ClInclude Include="Objects\ItemBox.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\Item.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ShiftingItem.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Goomba.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Mario.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\IGravity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Interact.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -148,6 +175,9 @@
     </Filter>
     <Filter Include="Viewer">
       <UniqueIdentifier>{30eb959a-0d6a-432b-a824-61d63d8ec61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{b80e7288-dec1-4c06-ae27-9c20f894d1ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

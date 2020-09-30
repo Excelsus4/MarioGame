@@ -11,11 +11,11 @@ public:
 
 	void Position(float x, float y);
 	void Position(D3DXVECTOR2 vec);
-	D3DXVECTOR2 Position() { return position; }
+	D3DXVECTOR2 Position() const { return position; }
 
 	void Scale(float x, float y);
 	void Scale(D3DXVECTOR2 vec);
-	D3DXVECTOR2 Scale() { return scale; }
+	D3DXVECTOR2 Scale() const { return scale; }
 
 	void Rotation(float x, float y, float z);
 	void Rotation(D3DXVECTOR3 vec);
@@ -25,7 +25,7 @@ public:
 	void RotationDegree(D3DXVECTOR3 vec);
 	D3DXVECTOR3 RotationDegree() const;
 
-	D3DXVECTOR2 TextureSize();
+	D3DXVECTOR2 TextureSize() const;
 
 	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P);
 	void Render();

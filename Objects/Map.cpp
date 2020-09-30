@@ -12,7 +12,7 @@ Map::~Map()
 
 void Map::GenerateMap()
 {
-	//TODO: Create Map HERE
+	//Create Map HERE
 	GenerateGround(D3DXVECTOR2(0, 0), 69);
 	{
 		GenerateHedge(D3DXVECTOR2(0, 2), 2);
