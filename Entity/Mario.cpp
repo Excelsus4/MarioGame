@@ -45,14 +45,13 @@ Mario::~Mario()
 
 }
 
-void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world)
+void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world, vector<Interact*>* entities)
 {
 	Animation::Update(V, P);
 	IGravity::Update(world);
 
 	D3DXVECTOR2 position = Position();
 	if (velocity > 0) {
-		//TODO: this is jumping, so split this back into mario code
 		//Check with each bricks and find if its ceiling
 		float CP = position.x;
 		float CD = Size().x / 2;
@@ -76,6 +75,45 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world)
 		}
 	}
 
+	//TODO: Check collision with entities
+	if (velocity < 0 && !bOnGround) {
+		// When going down
+		float CP = position.x;
+		float CD = Size().x / 2;
+
+		float CPV = position.y;
+		float CDV = Size().y / 2;
+		for (auto e : *entities) {
+			float BP = e->Position().x;
+			float BD = e->Size().x / 2;
+			if (CP + CD > BP - BD && CP - CD < BP + BD) {
+				float BPV = e->Position().y;
+				float BDV = e->Size().y / 2;
+				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+					e->Interact_Up(this);
+				}
+			}
+		}
+	}
+	else {
+		// Else
+		float CP = position.x;
+		float CD = Size().x / 2;
+
+		float CPV = position.y;
+		float CDV = Size().y / 2;
+		for (auto e : *entities) {
+			float BP = e->Position().x;
+			float BD = e->Size().x / 2;
+			if (CP + CD > BP - BD && CP - CD < BP + BD) {
+				float BPV = e->Position().y;
+				float BDV = e->Size().y / 2;
+				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+					e->Interact_Side(this);
+				}
+			}
+		}
+	}
 }
 
 void Mario::StartMoving(int Direction)
@@ -145,6 +183,19 @@ D3DXVECTOR2 Mario::Position() const
 D3DXVECTOR2 Mario::Size() const
 {
 	return Animation::TextureSize();
+}
+
+void Mario::Damage(int damage)
+{
+}
+
+void Mario::Grow(int level)
+{
+}
+
+void Mario::Bounce(int power)
+{
+	velocity = power;
 }
 
 void Mario::SetAnimState(State state)

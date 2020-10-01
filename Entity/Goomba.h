@@ -11,8 +11,7 @@ public:
 	virtual void Render() override;
 
 	virtual void Interact_Up(IMario* target) override;
-	virtual void Interact_Left(IMario* target) override;
-	virtual void Interact_Right(IMario* target) override;
+	virtual void Interact_Side(IMario* target) override;
 
 	virtual void Position(float x, float y) override;
 	virtual void Position(D3DXVECTOR2 vec) override;
@@ -20,6 +19,7 @@ public:
 
 	virtual D3DXVECTOR2 Size() const override;
 
+	virtual void OnDisposal(vector<Particle*>* pVector) override;
 protected:
 	virtual void SetAnimState(State state) override;
 
@@ -28,4 +28,5 @@ private:
 
 private:
 	Animation animation;
+	bool isFlat;
 };

@@ -15,6 +15,7 @@ vector<Bricks*> floorOnlyBricks;
 vector<Bricks*> nonPhysicBricks;
 vector<IBreakable*> platformBricks;
 vector<Interact*> Entities;
+vector<Particle*> particles;
 
 World world;
 
@@ -45,8 +46,10 @@ void DestroyScene(){
 		SAFE_DELETE(fb);
 	for (auto nb : nonPhysicBricks)
 		SAFE_DELETE(nb);
-	for(auto ee:Entities)
-		SAFE_DELETE(ee)
+	for (auto ee : Entities)
+		SAFE_DELETE(ee);
+	for (auto p : particles)
+		SAFE_DELETE(p);
 }
 
 D3DXMATRIX V, P;
@@ -74,7 +77,7 @@ void Update() {
 	D3DXMATRIX V = camera->View();
 
 	//Update
-	animation->Update(V, P, &world);
+	animation->Update(V, P, &world, &Entities);
 	for (auto a : bricks)
 		a->Update(V, P);
 	for (auto fb : floorOnlyBricks)
@@ -85,6 +88,34 @@ void Update() {
 		p->Update(V, P);
 	for (auto ee : Entities)
 		ee->Update(V, P, &world);
+
+	// DISPOSAL CODE
+	for (auto iter = Entities.begin(); iter != Entities.end();) {
+		if ((*iter)->isTrash) {
+			(*iter)->OnDisposal(&particles);
+			SAFE_DELETE(*iter);
+			iter = Entities.erase(iter);
+		}
+		else {
+			iter++;
+		}
+	}
+
+	// PARTICLE DISPOSAL
+	for (auto iter = particles.begin(); iter != particles.end();) {
+		if ((*iter)->isTrash) {
+			SAFE_DELETE(*iter);
+			iter = particles.erase(iter);
+		}
+		else {
+			iter++;
+		}
+	}
+
+
+
+	for (auto p : particles)
+		p->Update(V, P);
 }
 
 void Render() {
@@ -103,6 +134,9 @@ void Render() {
 			ee->Render();
 
 		animation->Render();
+
+		for (auto p : particles)
+			p->Render();
 	}
 	ImGui::Render();
 	SwapChain->Present(0, 0);

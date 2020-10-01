@@ -75,6 +75,9 @@
     <ClCompile Include="Entity\IGravity.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Extra\Particle.cpp">
+      <Filter>Extra</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -159,6 +162,12 @@
     <ClInclude Include="Entity\Interact.h">
       <Filter>Entity</Filter>
     </ClInclude>
+    <ClInclude Include="Extra\IDisposable.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="Extra\Particle.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -178,6 +187,9 @@
     </Filter>
     <Filter Include="Entity">
       <UniqueIdentifier>{b80e7288-dec1-4c06-ae27-9c20f894d1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extra">
+      <UniqueIdentifier>{136540ac-dfe1-48b2-b7a1-185480ec18ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #include "Goomba.h"
 
 Goomba::Goomba(D3DXVECTOR2 pos):
-	IGravity(150.0f)
+	IGravity(150.0f), isFlat(false)
 {
 	Clip* clip;
 	//Only Walk Available
@@ -10,6 +10,13 @@ Goomba::Goomba(D3DXVECTOR2 pos):
 		clip = new Clip(PlayMode::Loop);
 		clip->AddFrame(CreateGoombaSprite(0, 0), 0.2f);
 		clip->AddFrame(CreateGoombaSprite(1, 0), 0.2f);
+		animation.AddClip(clip);
+	}
+
+	// Flatten
+	{
+		clip = new Clip(PlayMode::End);
+		clip->AddFrame(CreateGoombaSprite(2, 0), 0.2f);
 		animation.AddClip(clip);
 	}
 
@@ -34,14 +41,14 @@ void Goomba::Render()
 
 void Goomba::Interact_Up(IMario* target)
 {
+	target->Bounce(200);
+	isFlat = true;
+	isTrash = true;
 }
 
-void Goomba::Interact_Left(IMario* target)
+void Goomba::Interact_Side(IMario* target)
 {
-}
-
-void Goomba::Interact_Right(IMario* target)
-{
+	target->Damage(1);
 }
 
 void Goomba::Position(float x, float y)
@@ -62,6 +69,23 @@ D3DXVECTOR2 Goomba::Position() const
 D3DXVECTOR2 Goomba::Size() const
 {
 	return animation.TextureSize();
+}
+
+void Goomba::OnDisposal(vector<Particle*>* pVector)
+{
+	if (isFlat) {
+		// Goomba is killed by flattening attack
+		Animation* anim = new Animation();
+		Clip* clip = new Clip(PlayMode::End);
+		clip->AddFrame(CreateGoombaSprite(2, 0), 0.2f);
+		anim->AddClip(clip);
+		anim->Position(Position());
+		pVector->push_back(new Particle(anim, 0.0f, D3DXVECTOR2(0, 0), 0.6f));
+	}
+	else {
+		// Goomba is killed by Something else
+		//TODO: Create a flying particle
+	}
 }
 
 void Goomba::SetAnimState(State state)

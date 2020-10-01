@@ -153,6 +153,7 @@
     <ClCompile Include="Entity\ShiftingItem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Extra\Particle.cpp" />
     <ClCompile Include="Objects\Bricks.cpp" />
     <ClCompile Include="Objects\DBricks.cpp" />
     <ClCompile Include="Objects\ItemBox.cpp" />
@@ -189,6 +190,8 @@
     <ClInclude Include="Entity\ShiftingItem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Extra\IDisposable.h" />
+    <ClInclude Include="Extra\Particle.h" />
     <ClInclude Include="Objects\Bricks.h" />
     <ClInclude Include="Objects\DBricks.h" />
     <ClInclude Include="Objects\IBreakable.h" />
