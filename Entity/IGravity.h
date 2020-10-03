@@ -31,7 +31,7 @@ protected:
 
 protected:
 	float gravity;
-	float velocity;
+	D3DXVECTOR2 velocity;
 	bool bOnGround;
 	int isMoving;
 	float speed;

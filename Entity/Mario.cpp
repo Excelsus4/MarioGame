@@ -45,13 +45,73 @@ Mario::~Mario()
 
 }
 
-void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world, vector<Interact*>* entities)
+void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 {
 	Animation::Update(V, P);
+}
+
+void Mario::Update(World* world, vector<Interact*>* entities)
+{
 	IGravity::Update(world);
 
 	D3DXVECTOR2 position = Position();
-	if (velocity > 0) {
+
+	// It is the walking Animation
+	if (bOnGround && isMoving != 0) {
+		SetAnimState(State::Walk);
+	}
+
+	// It is the sideward moving action
+	if (isMoving != 0) {
+		position.x += speed * Timer->Elapsed() * isMoving;
+
+		//Check with each bricks and find if its wall
+		float CPV = position.y;
+		float CDV = Size().y / 2;
+
+		float CP = position.x;
+		float CD = Size().x / 2;
+
+		for (auto a : *world->bricks) {
+			float BPV = a->Position().y;
+			float BDV = a->TextureSize().y / 2;
+
+			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+				float BP = a->Position().x;
+				float BD = a->TextureSize().x / 2;
+
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					if (CP > BP) {
+						position.x = BP + BD + CD;
+					}
+					else {
+						position.x = BP - BD - CD;
+					}
+				}
+			}
+		}
+
+		for (auto p : *world->platformBricks) {
+			float BPV = p->Position().y;
+			float BDV = p->TextureSize().y / 2;
+
+			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+				float BP = p->Position().x;
+				float BD = p->TextureSize().x / 2;
+
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					if (CP > BP) {
+						position.x = BP + BD + CD;
+					}
+					else {
+						position.x = BP - BD - CD;
+					}
+				}
+			}
+		}
+	}
+
+	if (velocity.y > 0) {
 		//Check with each bricks and find if its ceiling
 		float CP = position.x;
 		float CD = Size().x / 2;
@@ -66,17 +126,16 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world, vector<Interact
 				float BDV = a->TextureSize().y / 2;
 				if (CPV + CDV >= BPV - BDV && CPV - CDV <= BPV + BDV) {
 					position.y = BPV - BDV - CDV;
-					velocity = 0.0f;
+					velocity.y = 0.0f;
 					a->Bump(marioLevel);
-					Position(position);
 					break;
 				}
 			}
 		}
 	}
 
-	//TODO: Check collision with entities
-	if (velocity < 0 && !bOnGround) {
+	// Check collision with entities
+	if (velocity.y < 0 && !bOnGround) {
 		// When going down
 		float CP = position.x;
 		float CD = Size().x / 2;
@@ -114,6 +173,8 @@ void Mario::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world, vector<Interact
 			}
 		}
 	}
+
+	Position(position);
 }
 
 void Mario::StartMoving(int Direction)
@@ -139,7 +200,7 @@ void Mario::StartJump()
 {
 	if (bOnGround == true) {
 		UpdateMarioState(State::Jump);
-		velocity = jumpStrength;
+		velocity.y = jumpStrength;
 		bOnGround = false;
 	}
 }
@@ -149,8 +210,8 @@ void Mario::EndJump()
 	if (bOnGround == false) {
 		UpdateMarioState(State::Fall);
 	}
-	if (velocity > jumpStrength / 3)
-		velocity = jumpStrength / 3;
+	if (velocity.y > jumpStrength / 3)
+		velocity.y = jumpStrength / 3;
 }
 
 void Mario::Focus(D3DXVECTOR2 * position, D3DXVECTOR2 * size)
@@ -187,6 +248,15 @@ D3DXVECTOR2 Mario::Size() const
 
 void Mario::Damage(int damage)
 {
+	//TODO: Damage
+	if (marioLevel <= 1) {
+		//DIE!
+
+	}
+	else {
+		//LEVEL DOWN! and give a few second invincibility
+
+	}
 }
 
 void Mario::Grow(int level)
@@ -195,7 +265,7 @@ void Mario::Grow(int level)
 
 void Mario::Bounce(int power)
 {
-	velocity = power;
+	velocity.y = power;
 }
 
 void Mario::SetAnimState(State state)

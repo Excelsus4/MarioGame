@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Entity\Goomba.cpp" />
+    <ClCompile Include="Entity\IDrifting.cpp" />
     <ClCompile Include="Entity\IGravity.cpp" />
     <ClCompile Include="Entity\Item.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity\Goomba.h" />
+    <ClInclude Include="Entity\IDrifting.h" />
     <ClInclude Include="Entity\IGravity.h" />
     <ClInclude Include="Entity\Interact.h" />
     <ClInclude Include="Entity\Item.h">

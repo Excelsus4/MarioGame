@@ -10,7 +10,8 @@ public:
 	Mario();
 	virtual ~Mario();
 
-	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, World* world, vector<Interact*>* entities);
+	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P);
+	virtual void Update(World* world, vector<Interact*>* entities);
 
 	void StartMoving(int Direction);
 	void StopMoving();

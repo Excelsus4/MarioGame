@@ -35,7 +35,7 @@ void InitScene() {
 	world.nonPhysicBricks = &nonPhysicBricks;
 	world.platformBricks = &platformBricks;
 
-	Entities.push_back(new Goomba(D3DXVECTOR2(250, 170)));
+	Entities.push_back(new Goomba(D3DXVECTOR2(450, 170)));
 }
 
 void DestroyScene(){
@@ -68,6 +68,8 @@ void Update() {
 	else if (Key->Up(VK_SPACE))
 		animation->EndJump();
 
+	animation->Update(&world, &Entities);
+
 	//Projection
 	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width / WindowScale.x, 0, (float)Height / WindowScale.y, -1, 1);
 
@@ -77,7 +79,7 @@ void Update() {
 	D3DXMATRIX V = camera->View();
 
 	//Update
-	animation->Update(V, P, &world, &Entities);
+	animation->Update(V, P);
 	for (auto a : bricks)
 		a->Update(V, P);
 	for (auto fb : floorOnlyBricks)

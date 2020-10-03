@@ -2,7 +2,7 @@
 #include "Goomba.h"
 
 Goomba::Goomba(D3DXVECTOR2 pos):
-	IGravity(150.0f), isFlat(false)
+	IGravity(150.0f), isFlat(false), IDrifting(D3DXVECTOR2(10.0f, 0.0f))
 {
 	Clip* clip;
 	//Only Walk Available
@@ -32,6 +32,7 @@ void Goomba::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world)
 {
 	animation.Update(V, P);
 	IGravity::Update(world);
+	IDrifting::Update(world);
 }
 
 void Goomba::Render()

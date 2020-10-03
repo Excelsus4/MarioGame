@@ -1,8 +1,9 @@
 #pragma once
 #include "IGravity.h"
 #include "Interact.h"
+#include "IDrifting.h"
 
-class Goomba : public IGravity, public Interact{
+class Goomba : public IGravity, public Interact, public IDrifting{
 public:
 	Goomba(D3DXVECTOR2 pos);
 	virtual ~Goomba();

@@ -78,6 +78,9 @@
     <ClCompile Include="Extra\Particle.cpp">
       <Filter>Extra</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\IDrifting.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Extra\Particle.h">
       <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\IDrifting.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
