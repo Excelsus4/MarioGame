@@ -1,6 +1,5 @@
 #pragma once
 #include "IBreakable.h"
-#include "Entity/Interact.h"
 
 class ItemBox : public IBreakable{
 public:
@@ -22,5 +21,5 @@ private:
 	float velocity;
 	float acceleration;
 
-	vector<Interact*> itemInside;
+	//vector<Interact*> itemInside;
 };
