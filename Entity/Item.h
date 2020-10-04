@@ -1,10 +1,11 @@
 #pragma once
 #include "IGravity.h"
 #include "Interact.h"
+#include "Extra/IBoxItem.h"
 
-class Item : public IGravity, public Interact {
+class Item : public IGravity, public Interact, public IBoxItem {
 public:
-	Item();
+	Item(D3DXVECTOR2 pos);
 	virtual ~Item();
 
 	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P, World* world) override;
@@ -20,6 +21,8 @@ public:
 	virtual D3DXVECTOR2 Size() const override;
 
 	virtual void OnDisposal(vector<Particle*>* pVector) override;
+
+	void InitializeAsMushroom();
 protected:
 	virtual void SetAnimState(State state) override;
 	Sprite* CreateItemSprite(const int& xIndex, const int& yIndex);

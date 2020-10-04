@@ -39,6 +39,7 @@ private:
 	Sprite* CreateSuperMarioSprite(const int& xIndex, const int& yIndex);
 	void UpdateMarioState(bool headLeft);
 	void UpdateMarioState(State newState);
+	void UpdateMarioState(int newLevel);
 
 private:
 	int marioLevel;

@@ -39,6 +39,10 @@ void ItemBox::Render()
 	__super::Render();
 }
 
+void ItemBox::OnDisposal(vector<Particle*>* pVector)
+{
+}
+
 void ItemBox::Bounce(float initial, float hooke)
 {
 	velocity = initial;

@@ -1,5 +1,6 @@
 #pragma once
 #include "IBreakable.h"
+#include "Extra/IBoxItem.h"
 
 class ItemBox : public IBreakable{
 public:
@@ -11,6 +12,7 @@ public:
 	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P) override;
 	virtual void Render() override;
 
+	virtual void OnDisposal(vector<Particle*>* pVector) override;
 protected:
 	void Bounce(float initial, float hooke);
 
@@ -21,5 +23,5 @@ private:
 	float velocity;
 	float acceleration;
 
-	//vector<Interact*> itemInside;
+	vector<IBoxItem*> itemInside;
 };

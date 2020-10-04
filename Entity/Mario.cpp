@@ -36,6 +36,40 @@ Mario::Mario() :
 		AddClip(clip);
 	}
 
+	//=========================================================================
+	// SUPER MARIO
+	//=========================================================================
+	// Idle
+	{
+		clip = new Clip(PlayMode::End);
+		clip->AddFrame(CreateSuperMarioSprite(0, 1), 1.0f);
+		AddClip(clip);
+	}
+
+	// Walk
+	{
+		clip = new Clip(PlayMode::Loop);
+		clip->AddFrame(CreateSuperMarioSprite(1, 1), 0.1f);
+		clip->AddFrame(CreateSuperMarioSprite(3, 1), 0.1f);
+		clip->AddFrame(CreateSuperMarioSprite(2, 1), 0.1f);
+		clip->AddFrame(CreateSuperMarioSprite(3, 1), 0.1f);
+		AddClip(clip);
+	}
+
+	// Jump
+	{
+		clip = new Clip(PlayMode::End);
+		clip->AddFrame(CreateSuperMarioSprite(5, 1), 1.0f);
+		AddClip(clip);
+	}
+
+	// Fall
+	{
+		clip = new Clip(PlayMode::End);
+		clip->AddFrame(CreateSuperMarioSprite(5, 1), 1.0f);
+		AddClip(clip);
+	}
+
 	marioState = State::Idle;
 	Play((UINT)marioState);
 }
@@ -138,6 +172,7 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 			}
 		}
 	}
+	Position(position);
 
 	// Check collision with entities
 	if (velocity.y < 0 && !bOnGround) {
@@ -183,7 +218,6 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 		}
 	}
 
-	Position(position);
 }
 
 void Mario::StartMoving(int Direction)
@@ -265,6 +299,11 @@ void Mario::Damage(int damage)
 
 void Mario::Grow(int level)
 {
+	if (marioLevel < level) {
+		UpdateMarioState(level);
+		if (level == 2)
+			Position(Position() + D3DXVECTOR2(0, 16));
+	}
 }
 
 void Mario::Bounce(int power)
@@ -303,7 +342,7 @@ void Mario::UpdateMarioState(bool headLeft)
 		return;
 	else {
 		bHeadingLeft = headLeft;
-		Play((UINT)marioState);
+		Play((UINT)marioState+(marioLevel-1)*4);
 		RotationDegree(0, 180 * bHeadingLeft, 0);
 	}
 }
@@ -314,7 +353,18 @@ void Mario::UpdateMarioState(State newState)
 		return;
 	else {
 		marioState = newState;
-		Play((UINT)marioState);
+		Play((UINT)marioState + (marioLevel - 1) * 4);
+		RotationDegree(0, 180 * bHeadingLeft, 0);
+	}
+}
+
+void Mario::UpdateMarioState(int newLevel)
+{
+	if (newLevel == marioLevel)
+		return;
+	else {
+		marioLevel = newLevel;
+		Play((UINT)marioState + (marioLevel - 1) * 4);
 		RotationDegree(0, 180 * bHeadingLeft, 0);
 	}
 }

@@ -6,6 +6,7 @@
 #include "./Viewer/Following.h"
 #include "./Entity/Interact.h"
 #include "./Entity/Goomba.h"
+#include "./Entity/Item.h"
 
 Following* camera;
 
@@ -36,7 +37,11 @@ void InitScene() {
 	world.platformBricks = &platformBricks;
 
 	Entities.push_back(new Goomba(D3DXVECTOR2(400, 30)));
-
+	{
+		Item* mushroom = new Item(D3DXVECTOR2(440, 30));
+		mushroom->InitializeAsMushroom();
+		Entities.push_back(mushroom);
+	}
 
 	for (auto b : bricks)
 		camera->plan.push_back(b);
@@ -121,17 +126,34 @@ void Update() {
 	// DISPOSAL CODE
 	for (auto iter = Entities.begin(); iter != Entities.end();) {
 		if ((*iter)->isTrash) {
-			//TODO: delete this in camera as well
+			// delete this in camera as well
 			for (auto iter2 = camera->alive.begin(); iter2 != camera->alive.end(); iter2++) {
 				if ((*iter2) == (*iter)) {
 					camera->alive.erase(iter2);
 					break;
 				}
 			}
-
 			(*iter)->OnDisposal(&particles);
 			SAFE_DELETE(*iter);
 			iter = Entities.erase(iter);
+		}
+		else {
+			iter++;
+		}
+	}
+
+	for (auto iter = platformBricks.begin(); iter != platformBricks.end();) {
+		if ((*iter)->isTrash) {
+			// delete this in camera as well
+			for (auto iter2 = camera->alive.begin(); iter2 != camera->alive.end(); iter2++) {
+				if ((*iter2) == (*iter)) {
+					camera->alive.erase(iter2);
+					break;
+				}
+			}
+			(*iter)->OnDisposal(&particles);
+			SAFE_DELETE(*iter);
+			iter = platformBricks.erase(iter);
 		}
 		else {
 			iter++;

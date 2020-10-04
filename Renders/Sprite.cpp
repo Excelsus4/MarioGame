@@ -132,12 +132,13 @@ void Sprite::Initialize(wstring spriteFile, wstring shaderFile, float startX, fl
 	vertices[4].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f);
 	vertices[5].Position = D3DXVECTOR3(+0.5f, +0.5f, 0.0f);
 
-	vertices[0].Uv = D3DXVECTOR2(startX, endY);
-	vertices[1].Uv = D3DXVECTOR2(startX, startY);
-	vertices[2].Uv = D3DXVECTOR2(endX, endY);
-	vertices[3].Uv = D3DXVECTOR2(endX, endY);
-	vertices[4].Uv = D3DXVECTOR2(startX, startY);
-	vertices[5].Uv = D3DXVECTOR2(endX, startY);
+	float m = 0.0009f;
+	vertices[0].Uv = D3DXVECTOR2(startX+m, endY-m);
+	vertices[1].Uv = D3DXVECTOR2(startX+m, startY+m);
+	vertices[2].Uv = D3DXVECTOR2(endX-m, endY-m);
+	vertices[3].Uv = D3DXVECTOR2(endX-m, endY-m);
+	vertices[4].Uv = D3DXVECTOR2(startX+m, startY+m);
+	vertices[5].Uv = D3DXVECTOR2(endX-m, startY+m);
 
 	float sizeX = (endX > 0) ? endX * (float)info.Width : (float)info.Width;
 	sizeX -= startX * (float)info.Width;

@@ -30,9 +30,9 @@ Goomba::~Goomba()
 
 void Goomba::Update(D3DXMATRIX & V, D3DXMATRIX & P, World* world)
 {
-	animation.Update(V, P);
 	IGravity::Update(world);
 	IDrifting::Update(world);
+	animation.Update(V, P);
 }
 
 void Goomba::Render()

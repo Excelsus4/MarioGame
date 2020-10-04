@@ -148,7 +148,7 @@
     <ClCompile Include="Entity\IDrifting.cpp" />
     <ClCompile Include="Entity\IGravity.cpp" />
     <ClCompile Include="Entity\Item.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Entity\Mario.cpp" />
     <ClCompile Include="Entity\ShiftingItem.cpp">
@@ -186,12 +186,13 @@
     <ClInclude Include="Entity\IGravity.h" />
     <ClInclude Include="Entity\Interact.h" />
     <ClInclude Include="Entity\Item.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Entity\Mario.h" />
     <ClInclude Include="Entity\ShiftingItem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Extra\IBoxItem.h" />
     <ClInclude Include="Extra\IDisposable.h" />
     <ClInclude Include="Extra\Particle.h" />
     <ClInclude Include="Objects\Bricks.h" />

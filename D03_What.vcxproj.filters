@@ -177,6 +177,9 @@
     <ClInclude Include="Viewer\IViewDrivenLife.h">
       <Filter>Viewer</Filter>
     </ClInclude>
+    <ClInclude Include="Extra\IBoxItem.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">

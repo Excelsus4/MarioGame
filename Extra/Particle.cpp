@@ -18,6 +18,10 @@ void Particle::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 	age += Timer->Elapsed();
 	if (age > ttl)
 		isTrash = true;
+	else {
+		velocity.y -= gravity * Timer->Elapsed();
+		animation->Position(animation->Position() + velocity * Timer->Elapsed());
+	}
 	animation->Update(V, P);
 }
 
