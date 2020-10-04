@@ -133,7 +133,6 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 						position.y = BPV - BDV - CDV;
 						velocity.y = 0.0f;
 						a->Bump(marioLevel);
-						break;
 					}
 				}
 			}

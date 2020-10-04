@@ -10,6 +10,7 @@ public:
 	virtual void Update(D3DXMATRIX& V, D3DXMATRIX& P);
 	virtual void Render();
 
+	virtual void Position(D3DXVECTOR2 vec);
 	virtual D3DXVECTOR2 Position() const override { return position; }
 	virtual D3DXVECTOR2 Size() const override { return TextureSize(); }
 	D3DXVECTOR2 TextureSize() const { return sprite->TextureSize(); }

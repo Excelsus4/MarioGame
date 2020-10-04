@@ -29,3 +29,9 @@ void Bricks::Render()
 {
 	sprite->Render();
 }
+
+void Bricks::Position(D3DXVECTOR2 vec)
+{
+	position = vec;
+	sprite->Position(vec);
+}
