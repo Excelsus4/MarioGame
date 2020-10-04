@@ -32,40 +32,46 @@ void IGravity::Update(World * world)
 
 		bool isGroundExist = false;
 		for (auto a : *world->bricks) {
-			float BP = a->Position().x;
-			float BD = a->TextureSize().x / 2;
-			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				float BPV = a->Position().y;
-				float BDV = a->TextureSize().y / 2;
-				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
-					isGroundExist = true;
-				break;
-			}
-		}
-		if (!isGroundExist) {
-			for (auto fb : *world->floorOnlyBricks) {
-				float BP = fb->Position().x;
-				float BD = fb->TextureSize().x / 2;
+			if (a->isAlive) {
+				float BP = a->Position().x;
+				float BD = a->TextureSize().x / 2;
 				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					float BPV = fb->Position().y;
-					float BDV = fb->TextureSize().y / 2;
+					float BPV = a->Position().y;
+					float BDV = a->TextureSize().y / 2;
 					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
 						isGroundExist = true;
 					break;
 				}
 			}
 		}
+		if (!isGroundExist) {
+			for (auto fb : *world->floorOnlyBricks) {
+				if (fb->isAlive) {
+					float BP = fb->Position().x;
+					float BD = fb->TextureSize().x / 2;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						float BPV = fb->Position().y;
+						float BDV = fb->TextureSize().y / 2;
+						if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
+							isGroundExist = true;
+						break;
+					}
+				}
+			}
+		}
 
 		if (!isGroundExist) {
 			for (auto p : *world->platformBricks) {
-				float BP = p->Position().x;
-				float BD = p->TextureSize().x / 2;
-				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					float BPV = p->Position().y;
-					float BDV = p->TextureSize().y / 2;
-					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
-						isGroundExist = true;
-					break;
+				if (p->isAlive) {
+					float BP = p->Position().x;
+					float BD = p->TextureSize().x / 2;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						float BPV = p->Position().y;
+						float BDV = p->TextureSize().y / 2;
+						if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV)
+							isGroundExist = true;
+						break;
+					}
 				}
 			}
 		}
@@ -95,30 +101,12 @@ void IGravity::Update(World * world)
 		float CDV = Size().y / 2;
 
 		for (auto a : *world->bricks) {
-			float BP = a->Position().x;
-			float BD = a->TextureSize().x / 2;
-			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				float BPV = a->Position().y;
-				float BDV = a->TextureSize().y / 2;
-
-				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
-					if (currentState != State::Walk)
-						SetAnimState(State::Idle);
-					position.y = BPV + BDV + CDV;
-					velocity.y = 0.0f;
-					bOnGround = true;
-					Position(position);
-					break;
-				}
-			}
-		}
-		if (!bOnGround) {
-			for (auto fb : *world->floorOnlyBricks) {
-				float BP = fb->Position().x;
-				float BD = fb->TextureSize().x / 2;
+			if (a->isAlive) {
+				float BP = a->Position().x;
+				float BD = a->TextureSize().x / 2;
 				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					float BPV = fb->Position().y;
-					float BDV = fb->TextureSize().y / 2;
+					float BPV = a->Position().y;
+					float BDV = a->TextureSize().y / 2;
 
 					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
 						if (currentState != State::Walk)
@@ -133,21 +121,45 @@ void IGravity::Update(World * world)
 			}
 		}
 		if (!bOnGround) {
-			for (auto p : *world->platformBricks) {
-				float BP = p->Position().x;
-				float BD = p->TextureSize().x / 2;
-				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					float BPV = p->Position().y;
-					float BDV = p->TextureSize().y / 2;
+			for (auto fb : *world->floorOnlyBricks) {
+				if (fb->isAlive) {
+					float BP = fb->Position().x;
+					float BD = fb->TextureSize().x / 2;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						float BPV = fb->Position().y;
+						float BDV = fb->TextureSize().y / 2;
 
-					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
-						if (currentState != State::Walk)
-							SetAnimState(State::Idle);
-						position.y = BPV + BDV + CDV;
-						velocity.y = 0.0f;
-						bOnGround = true;
-						Position(position);
-						break;
+						if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+							if (currentState != State::Walk)
+								SetAnimState(State::Idle);
+							position.y = BPV + BDV + CDV;
+							velocity.y = 0.0f;
+							bOnGround = true;
+							Position(position);
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (!bOnGround) {
+			for (auto p : *world->platformBricks) {
+				if (p->isAlive) {
+					float BP = p->Position().x;
+					float BD = p->TextureSize().x / 2;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						float BPV = p->Position().y;
+						float BDV = p->TextureSize().y / 2;
+
+						if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+							if (currentState != State::Walk)
+								SetAnimState(State::Idle);
+							position.y = BPV + BDV + CDV;
+							velocity.y = 0.0f;
+							bOnGround = true;
+							Position(position);
+							break;
+						}
 					}
 				}
 			}

@@ -2,7 +2,7 @@
 #include "Goomba.h"
 
 Goomba::Goomba(D3DXVECTOR2 pos):
-	IGravity(150.0f), isFlat(false), IDrifting(D3DXVECTOR2(10.0f, 0.0f))
+	IGravity(150.0f), isFlat(false), IDrifting(D3DXVECTOR2(-40.0f, 0.0f))
 {
 	Clip* clip;
 	//Only Walk Available

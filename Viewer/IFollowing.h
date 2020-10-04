@@ -7,4 +7,5 @@ public:
 		D3DXVECTOR2* position,
 		D3DXVECTOR2* size
 	) = 0;
+	virtual void Position(D3DXVECTOR2 vec) = 0;
 };

@@ -216,6 +216,7 @@
     <ClInclude Include="Viewer\Following.h" />
     <ClInclude Include="Viewer\Freedom.h" />
     <ClInclude Include="Viewer\IFollowing.h" />
+    <ClInclude Include="Viewer\IViewDrivenLife.h" />
     <None Include="Utilities\Xml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Extra/IDisposable.h"
+#include "Viewer/IViewDrivenLife.h"
 
 class IMario {
 public:
@@ -9,7 +10,7 @@ public:
 	virtual void Bounce(int power) = 0;
 };
 
-class Interact : public IDisposable {
+class Interact : public IDisposable, public IViewDrivenLife {
 public:
 	Interact() {};
 	virtual ~Interact() {};

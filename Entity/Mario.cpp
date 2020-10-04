@@ -73,38 +73,42 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 		float CD = Size().x / 2;
 
 		for (auto a : *world->bricks) {
-			float BPV = a->Position().y;
-			float BDV = a->TextureSize().y / 2;
+			if (a->isAlive) {
+				float BPV = a->Position().y;
+				float BDV = a->TextureSize().y / 2;
 
-			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
-				float BP = a->Position().x;
-				float BD = a->TextureSize().x / 2;
+				if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+					float BP = a->Position().x;
+					float BD = a->TextureSize().x / 2;
 
-				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					if (CP > BP) {
-						position.x = BP + BD + CD;
-					}
-					else {
-						position.x = BP - BD - CD;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						if (CP > BP) {
+							position.x = BP + BD + CD;
+						}
+						else {
+							position.x = BP - BD - CD;
+						}
 					}
 				}
 			}
 		}
 
 		for (auto p : *world->platformBricks) {
-			float BPV = p->Position().y;
-			float BDV = p->TextureSize().y / 2;
+			if (p->isAlive) {
+				float BPV = p->Position().y;
+				float BDV = p->TextureSize().y / 2;
 
-			if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
-				float BP = p->Position().x;
-				float BD = p->TextureSize().x / 2;
+				if (CPV + CDV > BPV - BDV && CPV - CDV < BPV + BDV) {
+					float BP = p->Position().x;
+					float BD = p->TextureSize().x / 2;
 
-				if (CP + CD > BP - BD && CP - CD < BP + BD) {
-					if (CP > BP) {
-						position.x = BP + BD + CD;
-					}
-					else {
-						position.x = BP - BD - CD;
+					if (CP + CD > BP - BD && CP - CD < BP + BD) {
+						if (CP > BP) {
+							position.x = BP + BD + CD;
+						}
+						else {
+							position.x = BP - BD - CD;
+						}
 					}
 				}
 			}
@@ -119,16 +123,18 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 		float CPV = position.y;
 		float CDV = Size().y / 2;
 		for (auto a : *world->platformBricks) {
-			float BP = a->Position().x;
-			float BD = a->TextureSize().x / 2;
-			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				float BPV = a->Position().y;
-				float BDV = a->TextureSize().y / 2;
-				if (CPV + CDV >= BPV - BDV && CPV - CDV <= BPV + BDV) {
-					position.y = BPV - BDV - CDV;
-					velocity.y = 0.0f;
-					a->Bump(marioLevel);
-					break;
+			if (a->isAlive) {
+				float BP = a->Position().x;
+				float BD = a->TextureSize().x / 2;
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					float BPV = a->Position().y;
+					float BDV = a->TextureSize().y / 2;
+					if (CPV + CDV >= BPV - BDV && CPV - CDV <= BPV + BDV) {
+						position.y = BPV - BDV - CDV;
+						velocity.y = 0.0f;
+						a->Bump(marioLevel);
+						break;
+					}
 				}
 			}
 		}
@@ -143,13 +149,15 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 		float CPV = position.y;
 		float CDV = Size().y / 2;
 		for (auto e : *entities) {
-			float BP = e->Position().x;
-			float BD = e->Size().x / 2;
-			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				float BPV = e->Position().y;
-				float BDV = e->Size().y / 2;
-				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
-					e->Interact_Up(this);
+			if (e->isAlive) {
+				float BP = e->Position().x;
+				float BD = e->Size().x / 2;
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					float BPV = e->Position().y;
+					float BDV = e->Size().y / 2;
+					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+						e->Interact_Up(this);
+					}
 				}
 			}
 		}
@@ -162,13 +170,15 @@ void Mario::Update(World* world, vector<Interact*>* entities)
 		float CPV = position.y;
 		float CDV = Size().y / 2;
 		for (auto e : *entities) {
-			float BP = e->Position().x;
-			float BD = e->Size().x / 2;
-			if (CP + CD > BP - BD && CP - CD < BP + BD) {
-				float BPV = e->Position().y;
-				float BDV = e->Size().y / 2;
-				if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
-					e->Interact_Side(this);
+			if (e->isAlive) {
+				float BP = e->Position().x;
+				float BD = e->Size().x / 2;
+				if (CP + CD > BP - BD && CP - CD < BP + BD) {
+					float BPV = e->Position().y;
+					float BDV = e->Size().y / 2;
+					if (CPV - CDV <= BPV + BDV && CPV + CDV > BPV - BDV) {
+						e->Interact_Side(this);
+					}
 				}
 			}
 		}
@@ -216,14 +226,9 @@ void Mario::EndJump()
 
 void Mario::Focus(D3DXVECTOR2 * position, D3DXVECTOR2 * size)
 {
-	*position = Animation::Position() - focusOffset;
+	*position = Animation::Position();
 
-	D3DXVECTOR2 textureSize = TextureSize();
-	D3DXVECTOR2 scale = Scale();
-
-	(*position).y = 0;
-	(*size).x = textureSize.x*scale.x;
-	(*size).y = 0;
+	*size = TextureSize();
 }
 
 void Mario::Position(float x, float y)
