@@ -152,7 +152,7 @@
     </ClCompile>
     <ClCompile Include="Entity\Mario.cpp" />
     <ClCompile Include="Entity\ShiftingItem.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Extra\Particle.cpp" />
     <ClCompile Include="Objects\Bricks.cpp" />
@@ -190,7 +190,7 @@
     </ClInclude>
     <ClInclude Include="Entity\Mario.h" />
     <ClInclude Include="Entity\ShiftingItem.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Extra\IBoxItem.h" />
     <ClInclude Include="Extra\IDisposable.h" />

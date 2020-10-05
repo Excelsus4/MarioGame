@@ -22,6 +22,8 @@ public:
 
 	virtual void OnDisposal(vector<Particle*>* pVector) override;
 
+	virtual void Activate(D3DXVECTOR2 origin) override;
+
 	void InitializeAsMushroom();
 protected:
 	virtual void SetAnimState(State state) override;
@@ -29,5 +31,4 @@ protected:
 
 private:
 	Animation animation;
-	bool isFlat;
 };

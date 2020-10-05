@@ -2,7 +2,7 @@
 #include "Item.h"
 
 Item::Item(D3DXVECTOR2 pos):
-	IGravity(150.0f), isFlat(false)
+	IGravity(150.0f)
 {
 	Position(pos);
 }
@@ -56,6 +56,14 @@ D3DXVECTOR2 Item::Size() const
 
 void Item::OnDisposal(vector<Particle*>* pVector)
 {
+}
+
+void Item::Activate(D3DXVECTOR2 origin)
+{
+	//TODO: start from origin
+	// rise to +16
+	// rise by a certain speed
+	// after rise, free the object
 }
 
 void Item::InitializeAsMushroom()

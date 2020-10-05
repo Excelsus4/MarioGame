@@ -5,6 +5,6 @@ class IBoxItem {
 public:
 	IBoxItem() {}
 	virtual ~IBoxItem() {}
-private:
 
+	virtual void Activate(D3DXVECTOR2 origin) = 0;
 };

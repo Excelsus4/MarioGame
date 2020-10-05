@@ -7,6 +7,7 @@
 #include "./Entity/Interact.h"
 #include "./Entity/Goomba.h"
 #include "./Entity/Item.h"
+#include "./Entity/ShiftingItem.h"
 
 Following* camera;
 
@@ -38,8 +39,7 @@ void InitScene() {
 
 	Entities.push_back(new Goomba(D3DXVECTOR2(400, 30)));
 	{
-		Item* mushroom = new Item(D3DXVECTOR2(440, 30));
-		mushroom->InitializeAsMushroom();
+		ShiftingItem* mushroom = new ShiftingItem(D3DXVECTOR2(440, 30));
 		Entities.push_back(mushroom);
 	}
 
